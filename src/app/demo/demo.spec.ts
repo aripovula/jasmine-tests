@@ -5,7 +5,6 @@ import {
     // ReversePipe
 } from './demo';
 
-
 ///////// Fakes /////////
 export class FakeValueService extends ValueService {
     value = 'faked service value';
