@@ -46,13 +46,14 @@ export class MasterService {
 export class ReversePipe implements PipeTransform {
   transform(s: string) {
     let r = '';
-    for (let i = s.length; i; )  { r += s[--i]; };
+    for (let i = s.length; i; )  { r += s[--i]; }
     return r;
   }
 }
 
 //////////// Components /////////////
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'bank-account',
   template: `
    Bank Name: {{bank}}
@@ -61,6 +62,7 @@ export class ReversePipe implements PipeTransform {
 })
 export class BankAccountComponent {
   @Input() bank: string;
+  // tslint:disable-next-line:no-input-rename
   @Input('account') id: string;
 
   // Removed on 12/02/2016 when ceased public discussion of the `Renderer`. Revive in future?
@@ -71,6 +73,7 @@ export class BankAccountComponent {
 
 /** A component with attributes, styles, classes, and property setting */
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'bank-account-parent',
   template: `
    <bank-account
@@ -90,6 +93,7 @@ export class BankAccountParentComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'lightswitch-comp',
   template: `
     <button (click)="clicked()">Click me!</button>
@@ -102,6 +106,7 @@ export class LightswitchComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'child-1',
   template: `<span>Child-1({{text}})</span>`
 })
@@ -110,6 +115,7 @@ export class Child1Component {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'child-2',
   template: '<div>Child-2({{text}})</div>'
 })
@@ -118,6 +124,7 @@ export class Child2Component {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'child-3',
   template: '<div>Child-3({{text}})</div>'
 })
@@ -126,6 +133,7 @@ export class Child3Component {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'input-comp',
   template: `<input [(ngModel)]="name">`
 })
@@ -149,6 +157,7 @@ export class InputComponent {
 // }
 
 // As the styleguide recommends
+// tslint:disable-next-line:directive-selector
 @Directive({ selector: 'input[value]' })
 export class InputValueBinderDirective {
   @HostBinding()
@@ -163,6 +172,7 @@ export class InputValueBinderDirective {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'input-value-comp',
   template: `
     Name: <input [(value)]="name"> {{name}}
@@ -173,12 +183,14 @@ export class InputValueBinderComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'parent-comp',
   template: `Parent(<child-1></child-1>)`
 })
 export class ParentComponent { }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'io-comp',
   template: `<div class="hero" (click)="click()">Original {{hero.name}}</div>`
 })
@@ -189,6 +201,7 @@ export class IoComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'io-parent-comp',
   template: `
   <p *ngIf="!selectedHero"><i>Click to select a hero</i></p>
@@ -207,6 +220,7 @@ export class IoParentComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'my-if-comp',
   template: `MyIf(<span *ngIf="showMore">More</span>)`
 })
@@ -215,6 +229,7 @@ export class MyIfComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'my-service-comp',
   template: `injected value: {{valueService.value}}`,
   providers: [ValueService]
@@ -225,6 +240,7 @@ export class TestProvidersComponent {
 
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'my-service-comp',
   template: `injected value: {{valueService.value}}`,
   viewProviders: [ValueService]
@@ -234,6 +250,7 @@ export class TestViewProvidersComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'external-template-comp',
   templateUrl: './demo-external-template.html'
 })
@@ -248,6 +265,7 @@ export class ExternalTemplateComponent implements OnInit {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'comp-w-ext-comp',
   template: `
   <h3>comp-w-ext-comp</h3>
@@ -256,6 +274,7 @@ export class ExternalTemplateComponent implements OnInit {
 })
 export class InnerCompWithExternalTemplateComponent { }
 
+// tslint:disable-next-line:component-selector
 @Component({selector: 'needs-content', template: '<ng-content></ng-content>'})
 export class NeedsContentComponent {
   // children with #content local variable
@@ -264,6 +283,7 @@ export class NeedsContentComponent {
 
 ///////// MyIfChildComp ////////
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'my-if-child-1',
 
   template: `
@@ -302,11 +322,11 @@ export class MyIfChildComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    for (let propName in changes) {
+    for (const propName in changes) {
       this.ngOnChangesCounter += 1;
-      let prop = changes[propName];
-      let cur  = JSON.stringify(prop.currentValue);
-      let prev = JSON.stringify(prop.previousValue);
+      const prop = changes[propName];
+      const cur  = JSON.stringify(prop.currentValue);
+      const prev = JSON.stringify(prop.previousValue);
       this.changeLog.push(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
     }
   }
@@ -315,6 +335,7 @@ export class MyIfChildComponent implements OnInit, OnChanges, OnDestroy {
 ///////// MyIfParentComp ////////
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'my-if-parent-comp',
   template: `
     <h3>MyIfParentComp</h3>
@@ -347,6 +368,7 @@ export class MyIfParentComponent implements OnInit {
 
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'reverse-pipe-comp',
   template: `
     <input [(ngModel)]="text">
@@ -361,6 +383,7 @@ export class ReversePipeComponent {
 export class ShellComponent { }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'demo-comp',
   template: `
     <h1>Specs Demo</h1>
@@ -416,9 +439,9 @@ export const demoProviders = [MasterService, ValueService];
 
 ////////////////////
 ////////////
-import { NgModule }      from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [BrowserModule, FormsModule],
