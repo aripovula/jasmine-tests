@@ -23,19 +23,19 @@ describe('demo (no TestBed):', () => {
 
     it('#getObservableValue should return value from observable',
       (done: DoneFn) => {
-      service.getObservableValue().subscribe(value => {
-        expect(value).toBe('observable value');
-        done();
+        service.getObservableValue().subscribe(value => {
+          expect(value).toBe('observable value');
+          done();
+        });
       });
-    });
 
     it('#getPromiseValue should return value from a promise',
       (done: DoneFn) => {
-      service.getPromiseValue().then(value => {
-        expect(value).toBe('promise value');
-        done();
+        service.getPromiseValue().then(value => {
+          expect(value).toBe('promise value');
+          done();
+        });
       });
-    });
   });
 
   // MasterService requires injection of a ValueService
@@ -53,7 +53,7 @@ describe('demo (no TestBed):', () => {
     });
 
     it('#getValue should return faked value from a fake object', () => {
-      const fake =  { getValue: () => 'fake value' };
+      const fake = { getValue: () => 'fake value' };
       masterService = new MasterService(fake as ValueService);
       expect(masterService.getValue()).toBe('fake value');
     });

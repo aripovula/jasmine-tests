@@ -14,26 +14,29 @@ import {
   ReversePipeComponent, ShellComponent
 } from './demo';
 
-import { By }          from '@angular/platform-browser';
-import { Component,
-         DebugElement,
-         Injectable }  from '@angular/core';
+import { By } from '@angular/platform-browser';
+import {
+  Component,
+  DebugElement,
+  Injectable
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 // Forms symbols imported only for a specific test below
 import { NgModel, NgControl } from '@angular/forms';
 
-import { async, ComponentFixture, fakeAsync, inject, TestBed, tick
+import {
+  async, ComponentFixture, fakeAsync, inject, TestBed, tick
 } from '@angular/core/testing';
 
 import { addMatchers, newEvent, click } from '../../testing';
 
-export class NotProvided extends ValueService { /* example below */}
-beforeEach( addMatchers );
+export class NotProvided extends ValueService { /* example below */ }
+beforeEach(addMatchers);
 
 describe('demo (with TestBed):', () => {
 
-////////  Service Tests  /////////////
+  ////////  Service Tests  /////////////
 
   describe('ValueService', () => {
 
@@ -143,7 +146,7 @@ describe('demo (with TestBed):', () => {
     });
   });
 
-/////////// Component Tests //////////////////
+  /////////// Component Tests //////////////////
 
   describe('TestBed component tests', () => {
 
@@ -218,7 +221,7 @@ describe('demo (with TestBed):', () => {
 
     it('should support clicking a button', () => {
       const fixture = TestBed.createComponent(LightswitchComponent);
-      const btn  = fixture.debugElement.query(By.css('button'));
+      const btn = fixture.debugElement.query(By.css('button'));
       const span = fixture.debugElement.query(By.css('span')).nativeElement;
 
       fixture.detectChanges();
@@ -238,7 +241,7 @@ describe('demo (with TestBed):', () => {
       fixture.detectChanges();
 
       const comp = fixture.componentInstance;
-      const input = <HTMLInputElement> fixture.debugElement.query(By.css('input')).nativeElement;
+      const input = <HTMLInputElement>fixture.debugElement.query(By.css('input')).nativeElement;
 
       expect(comp.name).toBe(expectedOrigName,
         `At start name should be ${expectedOrigName} `);
@@ -260,10 +263,10 @@ describe('demo (with TestBed):', () => {
         input.dispatchEvent(newEvent('input'));
         return fixture.whenStable();
       })
-      .then(() => {
-        expect(comp.name).toBe(expectedNewName,
-          `After ngModel updates the model, comp.name should be ${expectedNewName} `);
-      });
+        .then(() => {
+          expect(comp.name).toBe(expectedNewName,
+            `After ngModel updates the model, comp.name should be ${expectedNewName} `);
+        });
     }));
 
     // fakeAsync version of ngModel input test enables sync test style
@@ -275,8 +278,8 @@ describe('demo (with TestBed):', () => {
       const fixture = TestBed.createComponent(InputComponent);
       fixture.detectChanges();
 
-      const comp =  fixture.componentInstance;
-      const input = <HTMLInputElement> fixture.debugElement.query(By.css('input')).nativeElement;
+      const comp = fixture.componentInstance;
+      const input = <HTMLInputElement>fixture.debugElement.query(By.css('input')).nativeElement;
 
       expect(comp.name).toBe(expectedOrigName,
         `At start name should be ${expectedOrigName} `);
@@ -308,9 +311,9 @@ describe('demo (with TestBed):', () => {
       const fixture = TestBed.createComponent(ReversePipeComponent);
       fixture.detectChanges();
 
-      const comp =  fixture.componentInstance;
+      const comp = fixture.componentInstance;
       const input = fixture.debugElement.query(By.css('input')).nativeElement as HTMLInputElement;
-      const span =  fixture.debugElement.query(By.css('span')).nativeElement  as HTMLElement;
+      const span = fixture.debugElement.query(By.css('span')).nativeElement as HTMLElement;
 
       // simulate user entering new name in input
       input.value = inputText;
@@ -376,10 +379,10 @@ describe('demo (with TestBed):', () => {
       const fixture = TestBed.configureTestingModule({
         declarations: [Child1Component],
       })
-      .overrideComponent(Child1Component, {
-        set: { template: '<span>Fake</span>' }
-      })
-      .createComponent(Child1Component);
+        .overrideComponent(Child1Component, {
+          set: { template: '<span>Fake</span>' }
+        })
+        .createComponent(Child1Component);
 
       fixture.detectChanges();
       expect(fixture).toHaveText('Fake');
@@ -389,14 +392,14 @@ describe('demo (with TestBed):', () => {
       const fixture = TestBed.configureTestingModule({
         declarations: [TestProvidersComponent],
       })
-      .overrideComponent(TestProvidersComponent, {
-        remove: { providers: [ValueService]},
-        add:    { providers: [{ provide: ValueService, useClass: FakeValueService }] },
+        .overrideComponent(TestProvidersComponent, {
+          remove: { providers: [ValueService] },
+          add: { providers: [{ provide: ValueService, useClass: FakeValueService }] },
 
-        // Or replace them all (this component has only one provider)
-        // set:    { providers: [{ provide: ValueService, useClass: FakeValueService }] },
-      })
-      .createComponent(TestProvidersComponent);
+          // Or replace them all (this component has only one provider)
+          // set:    { providers: [{ provide: ValueService, useClass: FakeValueService }] },
+        })
+        .createComponent(TestProvidersComponent);
 
       fixture.detectChanges();
       expect(fixture).toHaveText('injected value: faked value', 'text');
@@ -412,14 +415,14 @@ describe('demo (with TestBed):', () => {
       const fixture = TestBed.configureTestingModule({
         declarations: [TestViewProvidersComponent],
       })
-      .overrideComponent(TestViewProvidersComponent, {
-        // remove: { viewProviders: [ValueService]},
-        // add:    { viewProviders: [{ provide: ValueService, useClass: FakeValueService }] },
+        .overrideComponent(TestViewProvidersComponent, {
+          // remove: { viewProviders: [ValueService]},
+          // add:    { viewProviders: [{ provide: ValueService, useClass: FakeValueService }] },
 
-        // Or replace them all (this component has only one viewProvider)
-        set:    { viewProviders: [{ provide: ValueService, useClass: FakeValueService }] },
-      })
-      .createComponent(TestViewProvidersComponent);
+          // Or replace them all (this component has only one viewProvider)
+          set: { viewProviders: [{ provide: ValueService, useClass: FakeValueService }] },
+        })
+        .createComponent(TestViewProvidersComponent);
 
       fixture.detectChanges();
       expect(fixture).toHaveText('injected value: faked value');
@@ -429,20 +432,20 @@ describe('demo (with TestBed):', () => {
 
       // TestComponent is parent of TestProvidersComponent
       @Component({ template: '<my-service-comp></my-service-comp>' })
-      class TestComponent {}
+      class TestComponent { }
 
       // 3 levels of ValueService provider: module, TestCompomponent, TestProvidersComponent
       const fixture = TestBed.configureTestingModule({
         declarations: [TestComponent, TestProvidersComponent],
-        providers:    [ValueService]
+        providers: [ValueService]
       })
-      .overrideComponent(TestComponent, {
-        set: { providers: [{ provide: ValueService, useValue: {} }] }
-      })
-      .overrideComponent(TestProvidersComponent, {
-        set: { providers: [{ provide: ValueService, useClass: FakeValueService }] }
-      })
-      .createComponent(TestComponent);
+        .overrideComponent(TestComponent, {
+          set: { providers: [{ provide: ValueService, useValue: {} }] }
+        })
+        .overrideComponent(TestProvidersComponent, {
+          set: { providers: [{ provide: ValueService, useClass: FakeValueService }] }
+        })
+        .createComponent(TestComponent);
 
       let testBedProvider: ValueService;
       let tcProvider: ValueService;
@@ -465,10 +468,10 @@ describe('demo (with TestBed):', () => {
       const fixture = TestBed.configureTestingModule({
         declarations: [ShellComponent, NeedsContentComponent, Child1Component, Child2Component, Child3Component],
       })
-      .overrideComponent(ShellComponent, {
-        set: {
-          selector: 'test-shell',
-          template: `
+        .overrideComponent(ShellComponent, {
+          set: {
+            selector: 'test-shell',
+            template: `
           <needs-content #nc>
             <child-1 #content text="My"></child-1>
             <child-2 #content text="dog"></child-2>
@@ -477,9 +480,9 @@ describe('demo (with TestBed):', () => {
             <div #content>!</div>
           </needs-content>
           `
-        }
-      })
-      .createComponent(ShellComponent);
+          }
+        })
+        .createComponent(ShellComponent);
 
       fixture.detectChanges();
 
@@ -493,7 +496,7 @@ describe('demo (with TestBed):', () => {
       expect(el.references['nc']).toBe(comp, '#nc reference to component');
 
       // Filter for DebugElements with a #content reference
-      const contentRefs = el.queryAll( de => de.references['content']);
+      const contentRefs = el.queryAll(de => de.references['content']);
       expect(contentRefs.length).toBe(4, 'elements w/ a #content reference');
     });
 
@@ -531,8 +534,8 @@ describe('demo (with TestBed):', () => {
 
   describe('lifecycle hooks w/ MyIfParentComp', () => {
     let fixture: ComponentFixture<MyIfParentComponent>;
-    let parent:  MyIfParentComponent;
-    let child:   MyIfChildComponent;
+    let parent: MyIfParentComponent;
+    let child: MyIfChildComponent;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -599,14 +602,14 @@ describe('demo (with TestBed):', () => {
         // Wait one JS engine turn!
         setTimeout(() => resolve(), 0);
       })
-      .then(() => {
-        fixture.detectChanges();
+        .then(() => {
+          fixture.detectChanges();
 
-        expect(child.ngOnChangesCounter).toBe(2,
-          'expected 2 changes: initial value and changed value');
-        expect(parent.parentValue).toBe('bar',
-          'parentValue should eq changed parent value');
-      });
+          expect(child.ngOnChangesCounter).toBe(2,
+            'expected 2 changes: initial value and changed value');
+          expect(parent.parentValue).toBe('bar',
+            'parentValue should eq changed parent value');
+        });
 
     }));
 
